@@ -5,7 +5,7 @@ const Upcoming = () => {
   const options = {
     method: 'GET',
     // 1399 id
-    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
+    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
     headers: {
       'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
@@ -87,7 +87,11 @@ const Upcoming = () => {
     return <>error:{err.message}</>
   }
   else {
-    return <>wait....</>
+    return(
+      <>
+      <div class="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div>
+      </>
+    )
   }
 }
 export default Upcoming
