@@ -18,7 +18,7 @@ const Recent = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
     headers: {
       'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
       'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
