@@ -2,10 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 const matchIDslice= createSlice({
     name:'matchid',
     initialState:{
-        id:0
+        id:0,
+        img1:0,
+        img2:0
     },
     reducers:{
-        idGen:(state,action)=>{state.id=action.payload}
+        idGen:(state,action)=>{state.id=action.payload.matchDataId
+          state.img1=action.payload.imageIDS.team1IMG
+          state.img2=action.payload.imageIDS.team2IMG
+        }
     }
 })
 const scoreSlice=createSlice({

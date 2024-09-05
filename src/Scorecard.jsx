@@ -19,7 +19,7 @@ const Scorecard = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
+    // url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
     headers: {
       'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
       'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
@@ -27,6 +27,7 @@ const Scorecard = () => {
   };
   const [scoreRes, setScoreRes] = useState(0)
   const [err, setScoreErr] = useState(0)
+  const [IMG, setImg] = useState(0)
   const dispatch = useDispatch()
   useEffect(() => {
     async function scoreData() {
@@ -48,8 +49,8 @@ const Scorecard = () => {
             <div className='m-2 flex flex-col items-center gap-y-2'>
               <span>{scoreRes.data.matchHeader.seriesName}</span>
               <span>{scoreRes.data.matchHeader.matchDescription}</span>
-              <div className='flex justify-between items-center p-1 gap-x-9 lg:hidden'><div className='h-12 w-12 bg-fuchsia-600'></div><span>{scoreRes.data.matchHeader.team1.shortName}</span><span>{scoreRes.data.matchHeader.team2.shortName}</span><div className='h-12 w-12 bg-fuchsia-600'></div></div>
-              <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12 bg-fuchsia-600'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12 bg-fuchsia-600'></div></div>
+              <div className='flex justify-between items-center p-1 gap-x-9 lg:hidden'><div className='h-12'></div><span>{scoreRes.data.matchHeader.team1.shortName}</span><span>{scoreRes.data.matchHeader.team2.shortName}</span><div className='h-12'></div></div>
+              <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12'></div></div>
               <span className='lg:text-xl'>{scoreRes.data.status}</span>
               <div className='flex flex-wrap lg:gap-x-3 mt-4'>
                 <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1">{scoreRes.data.matchHeader.team1.shortName} 1st Inn</Link></button>
@@ -68,8 +69,8 @@ const Scorecard = () => {
             <div className='m-2 flex flex-col items-center gap-y-2'>
               <span>{scoreRes.data.matchHeader.seriesName}</span>
               <span>{scoreRes.data.matchHeader.matchDescription}</span>
-              <div className='flex justify-between items-center p-1 gap-x-9 lg:hidden'><div className='h-12 w-12 bg-fuchsia-600'></div><span>{scoreRes.data.matchHeader.team1.shortName}</span><span>{scoreRes.data.matchHeader.team2.shortName}</span><div className='h-12 w-12 bg-fuchsia-600'></div></div>
-              <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12 bg-fuchsia-600'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12 bg-fuchsia-600'></div></div>
+              <div className='flex justify-between items-center p-1 gap-x-9 lg:hidden'><div className='h-12 w-12'></div><span>{scoreRes.data.matchHeader.team1.shortName}</span><span>{scoreRes.data.matchHeader.team2.shortName}</span><div className='h-12 w-12'></div></div>
+              <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12'></div></div>
               <span className='lg:text-xl'>{scoreRes.data.status}</span>
               <div className='flex flex-wrap lg:gap-x-3 mt-4'>
                 <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1">{scoreRes.data.matchHeader.team1.shortName}</Link></button>

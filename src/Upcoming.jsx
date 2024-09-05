@@ -5,7 +5,7 @@ const Upcoming = () => {
   const options = {
     method: 'GET',
     // 1399 id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
     headers: {
       'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'

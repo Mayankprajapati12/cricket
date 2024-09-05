@@ -3,7 +3,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { idGen } from './matchIDslice';
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 
 const Recent = () => {
   const options = {
@@ -26,6 +26,8 @@ const Recent = () => {
   };
   const [res, getRes] = useState(0)
   const [err, setErr] = useState(0)
+  const selector=useSelector((state)=>state)
+  console.log("selectorData:::",selector);
   const dispatch = useDispatch()
   useEffect(() => {
     async function getRecent() {
@@ -64,7 +66,7 @@ const Recent = () => {
                                     {/* 2nd t dtails: */}
                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs}) & {matchList.matchScore.team2Score.inngs2.runs}-{matchList.matchScore.team2Score.inngs2.wickets} ({matchList.matchScore.team2Score.inngs2.overs})</span></div>
                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                    <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+                                    <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen({matchDataId:matchList.matchInfo.matchId,imageIDS:{team1IMG:matchList.matchInfo.team1.imageId,team2IMG:matchList.matchInfo.team2.imageId}})) }}><Link to="/scorecard">Show Score</Link></button>
                                   </div>
                                 </>
                               )
