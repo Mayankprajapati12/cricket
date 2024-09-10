@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom'
 import { matchScores } from './matchIDslice'
 const Scorecard = () => {
   const mId = useSelector((state) => state.id)
-  console.log("mid:",mId);
+  console.log("mid:", mId);
   const options = {
     method: 'GET',
     // 1399 id
@@ -28,6 +28,10 @@ const Scorecard = () => {
   const [scoreRes, setScoreRes] = useState(0)
   const [err, setScoreErr] = useState(0)
   const [IMG, setImg] = useState(0)
+  const [link, setLink] = useState('first')
+  function activeLink(links) {
+    setLink(links)
+  }
   const dispatch = useDispatch()
   useEffect(() => {
     async function scoreData() {
@@ -53,10 +57,10 @@ const Scorecard = () => {
               <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12'></div></div>
               <span className='lg:text-xl'>{scoreRes.data.status}</span>
               <div className='flex flex-wrap lg:gap-x-3 mt-4'>
-                <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1">{scoreRes.data.matchHeader.team1.shortName} 1st Inn</Link></button>
-                <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2">{scoreRes.data.matchHeader.team2.shortName} 1st Inn</Link></button>
-                <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1sec">{scoreRes.data.matchHeader.team1.shortName} 2nd Inn</Link></button>
-                <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2sec">{scoreRes.data.matchHeader.team2.shortName} 2nd Inn</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "first" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1" onClick={() => { activeLink('first') }}>{scoreRes.data.matchHeader.team1.shortName} 1st Inn</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2" onClick={() => { activeLink('second') }}>{scoreRes.data.matchHeader.team2.shortName} 1st Inn</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1sec" onClick={() => { activeLink('third') }}>{scoreRes.data.matchHeader.team1.shortName} 2nd Inn</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2sec" onClick={() => { activeLink('fourth') }}>{scoreRes.data.matchHeader.team2.shortName} 2nd Inn</Link></button>
               </div>
             </div>
             <Outlet />
@@ -73,8 +77,8 @@ const Scorecard = () => {
               <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12'></div></div>
               <span className='lg:text-xl'>{scoreRes.data.status}</span>
               <div className='flex flex-wrap lg:gap-x-3 mt-4'>
-                <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1">{scoreRes.data.matchHeader.team1.shortName}</Link></button>
-                <button className='h-9 w-24 border rounded-md hover:bg-sky-500 lg:w-[305px]' onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2">{scoreRes.data.matchHeader.team2.shortName}</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1" onClick={() => { activeLink('first') }}>{scoreRes.data.matchHeader.team1.shortName}</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2" onClick={() => { activeLink('second') }}>{scoreRes.data.matchHeader.team2.shortName}</Link></button>
               </div>
             </div>
             <Outlet />
@@ -90,7 +94,11 @@ const Scorecard = () => {
     return <>error:{err.message}</>
   }
   else {
-    return <>wait...</>
+    return (
+      <>
+        <div class="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div>
+      </>
+    )
   }
 }
 export default Scorecard
