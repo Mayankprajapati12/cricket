@@ -26,9 +26,9 @@ const Home = () => {
         </nav>
         <div className={`fixed top-0 left-0 h-full bg-green-400 transform ${menu ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
           <ul className='flex flex-col my-28 gap-2'>
-            <li className='mx-2 h-12 w-52 flex flex-col justify-center hover:bg-red-500 py-5 text-center' onClick={menuBar}><Link to="/">Live Matches</Link></li>
-            <li className='mx-2 h-12 w-52 flex flex-col justify-center hover:bg-red-500 py-5 text-center' onClick={menuBar}><Link to="/recent">Recent Matches</Link></li>
-            <li className='mx-2 h-12 w-52 flex flex-col justify-center hover:bg-red-500 py-5 text-center' onClick={menuBar}><Link to="/upcoming">Upcoming Matches</Link></li>
+            <li className='mx-2 h-12 w-52 flex flex-col justify-center hover:border-white py-5 text-center' onClick={menuBar}><Link to="/">Live Matches</Link></li>
+            <li className='mx-2 h-12 w-52 flex flex-col justify-center hover:border-white py-5 text-center' onClick={menuBar}><Link to="/recent">Recent Matches</Link></li>
+            <li className='mx-2 h-12 w-52 flex flex-col justify-center hover:border-white py-5 text-center' onClick={menuBar}><Link to="/upcoming">Upcoming Matches</Link></li>
           </ul>
         </div>
       </div>
