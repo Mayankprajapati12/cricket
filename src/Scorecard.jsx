@@ -19,7 +19,7 @@ const Scorecard = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
+    url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
     headers: {
       'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
       'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
@@ -77,7 +77,7 @@ const Scorecard = () => {
               <div className='hidden lg:flex w-11/12 justify-around items-center p-1 gap-x-9'><div className='h-12 w-12'></div><span className='text-xl'>{scoreRes.data.matchHeader.team1.name}</span><span className='text-xl'>{scoreRes.data.matchHeader.team2.name}</span><div className='h-12 w-12'></div></div>
               <span className='lg:text-xl'>{scoreRes.data.status}</span>
               <div className='flex flex-wrap lg:gap-x-3 mt-4'>
-                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1" onClick={() => { activeLink('first') }}>{scoreRes.data.matchHeader.team1.shortName}</Link></button>
+                <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "first" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team1" onClick={() => { activeLink('first') }}>{scoreRes.data.matchHeader.team1.shortName}</Link></button>
                 <button className={`h-9 w-24 border rounded-md lg:w-[305px] ${link == "second" ? "bg-sky-500 text-white" : "bg-white"}`} onClick={() => { dispatch(matchScores(scoreRes.data.scoreCard)) }}><Link to="/scorecard/team2" onClick={() => { activeLink('second') }}>{scoreRes.data.matchHeader.team2.shortName}</Link></button>
               </div>
             </div>

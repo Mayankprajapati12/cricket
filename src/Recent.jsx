@@ -10,7 +10,7 @@ const Recent = () => {
     method: 'GET',
     // 1399 id
     // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
-    headers: {
+    headers: {  
       'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
     }
@@ -18,7 +18,7 @@ const Recent = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
     headers: {
       'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
       'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
