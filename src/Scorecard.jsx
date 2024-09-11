@@ -19,7 +19,7 @@ const Scorecard = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
+    // url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
     headers: {
       'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
       'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
