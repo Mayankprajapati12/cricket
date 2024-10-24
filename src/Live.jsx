@@ -153,7 +153,7 @@ const Live = () => {
                                     <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
                                       <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
                                       <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
+                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>w
                                       <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
                                       <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
                                     </div>
@@ -172,7 +172,6 @@ const Live = () => {
                                   <span className='text-gray-800 font-medium text-sm'>{matchList.matchInfo.seriesName}</span>
                                   <span className='text-sm'>{matchList.matchInfo.venueInfo.city}</span>
                                   <span className='font-medium text-red-600'>{matchList.matchInfo.status}</span>
-                                  {/* <button className='bg-sky-500 mx-auto px-2 py-1 mt-1 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button> */}
                                 </div>
                               </>
                             )

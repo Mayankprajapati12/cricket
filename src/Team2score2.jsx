@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 const Team1score = () => {
-  const displayScores = useSelector((state) => state.score.scoreData[2]);
+  const displayScores = useSelector((state) => state.score.scoreData[3]);
   console.log(displayScores);
   if (displayScores !== undefined) {
     const battingData = Object.values(displayScores.batTeamDetails.batsmenData)
