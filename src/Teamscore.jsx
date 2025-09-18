@@ -1,18 +1,22 @@
-import { useSelector } from 'react-redux'
-const Team1score = () => {
-  const displayScores = useSelector((state) => state.score.scoreData[1]);
-  console.log(displayScores);
-  if (displayScores !== undefined) {
-    const battingData = Object.values(displayScores.batTeamDetails.batsmenData)
-    const bowlingData = Object.values(displayScores.bowlTeamDetails.bowlersData)
+import React from 'react'
+
+const Teamscore = ({scoreData}) => {
+  //   console.log('first team data:', scoreData);
+  //   console.log('othehr team data:', other_innings!=null? other_innings: 'no other innings');
+  // return (
+  //   <div>Teamscore page</div>
+  // )
+    if (scoreData) {
+    const battingData = Object.values(scoreData.batTeamDetails.batsmenData)
+    const bowlingData = Object.values(scoreData.bowlTeamDetails.bowlersData)
     return (
       <>
         <div>
           <div className='flex justify-evenly items-center mt-5'>
-            <span>{displayScores.batTeamDetails.batTeamShortName}</span>
-            <span className='font-medium text-[20px]'>{displayScores.scoreDetails.runs} - {displayScores.scoreDetails.wickets}</span>
-            <span>Overs : {displayScores.scoreDetails.overs}</span>
-            <span>Run Rate : {displayScores.scoreDetails.runRate}</span>
+            <span>{scoreData.batTeamDetails.batTeamShortName}</span>
+            <span className='font-medium text-[20px]'>{scoreData.scoreDetails.runs} - {scoreData.scoreDetails.wickets}</span>
+            <span>Overs : {scoreData.scoreDetails.overs}</span>
+            <span>RR : {scoreData.scoreDetails.runRate}</span>
           </div>
           <div className='lg:flex gap-x-3 px-3 mb-3'>
             <table className='m-auto w-[95%] text-sm mt-7'>
@@ -79,4 +83,5 @@ const Team1score = () => {
     return <>nodata...</>
   }
 }
-export default Team1score
+
+export default Teamscore

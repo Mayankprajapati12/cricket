@@ -1,5 +1,4 @@
 import axios from 'axios';
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { idGen } from './matchIDslice';
@@ -18,7 +17,7 @@ const Live = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
+    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
     headers: {
       'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
       'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
@@ -40,179 +39,224 @@ const Live = () => {
   console.log("res:", res);
   console.log("Err:", err);
   if (res !== 0) {
-    if (res.data.typeMatches !== undefined) {
+    if (res.data.typeMatches) {
       const intMatch = res.data.typeMatches.filter((matchTypes) => matchTypes.matchType === 'International' || matchTypes.matchType === 'League')
-      if (intMatch.length !== 0) {
-        console.log("intmatch:", intMatch);
+      if (intMatch) {
+        // console.log('int matcghes:', intMatch);
         return (
           <>
-            <div className='flex flex-col sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
-              {intMatch.map((matches) => {
-                return (
-                  matches.seriesMatches.map((innerMatches) => {
-                    if (innerMatches.seriesAdWrapper !== undefined) {
-                      return (
-                        innerMatches.seriesAdWrapper.matches.map((matchList) => {
-                          if (matchList.matchInfo.matchFormat === "TEST") {
-                            if (matchList.matchScore !== undefined) {
-                              if (matchList.matchScore.team2Score.inngs2 !== undefined) {
-                                return (
-                                  <>
-                                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                      <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs}) & {matchList.matchScore.team1Score.inngs2.runs}-{matchList.matchScore.team1Score.inngs2.wickets} ({matchList.matchScore.team1Score.inngs2.overs})</span></div>
-                                      {/* 2nd t dtails: */}
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs}) & {matchList.matchScore.team2Score.inngs2.runs}-{matchList.matchScore.team2Score.inngs2.wickets} ({matchList.matchScore.team2Score.inngs2.overs})</span></div>
-                                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
-                                    </div>
-                                  </>
-                                )
-                              }
-                              else if (matchList.matchScore.team1Score.inngs2 !== undefined) {
-                                return (
-                                  <>
-                                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                      <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs}) & {matchList.matchScore.team1Score.inngs2.runs}-{matchList.matchScore.team1Score.inngs2.wickets} ({matchList.matchScore.team1Score.inngs2.overs})</span></div>
-                                      {/* 2nd t dtails: */}
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs})</span></div>
-                                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
-                                    </div>
-                                  </>
-                                )
-                              }
-                              else if (matchList.matchScore.team2Score.inngs1 !== undefined) {
-                                return (
-                                  <>
-                                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                      <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
-                                      {/* 2nd t dtails: */}
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs})</span></div>
-                                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
-                                    </div>
-                                  </>
-                                )
-                              }
-                              else if (matchList.matchScore.team1Score !== undefined) {
-                                return (
-                                  <>
-                                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                      <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
-                                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
-                                    </div>
-                                  </>
-                                )
-                              }
-                            }
-                            else {
-                              return (
-                                <>
-                                  <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                    <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                    <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                    <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span>
-                                    </div>
-                                    <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span>
-                                    </div>
-                                    <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                  </div>
-                                </>
-                              )
-                            }
-                          }
-                          else if (matchList.matchInfo.matchFormat !== "TEST") {
-                            if (matchList.matchScore !== undefined) {
-                              if (matchList.matchScore.team2Score !== undefined) {
-                                return (
-                                  <>
-                                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                      <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
-                                      {/* 2nd t dtails: */}
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs})</span></div>
-                                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
-                                    </div>
-                                  </>
-                                )
-                              }
-                              else if (matchList.matchScore.team1Score !== undefined) {
-                                return (
-                                  <>
-                                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
-                                      <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
-                                      <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>w
-                                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
-                                    </div>
-                                  </>
-                                )
-                              }
-                              else {
-                                return null
-                              }
-                            }
-                          }
-                          else {
-                            return (
-                              <>
-                                <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-1'>
-                                  <span className='text-gray-800 font-medium text-sm'>{matchList.matchInfo.seriesName}</span>
-                                  <span className='text-sm'>{matchList.matchInfo.venueInfo.city}</span>
-                                  <span className='font-medium text-red-600'>{matchList.matchInfo.status}</span>
-                                </div>
-                              </>
-                            )
-                          }
-                        })
-                      )
-                    }
-                    else {
-                      return null
-                    }
-                  })
+            <div className='flex flex-col sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
+              {intMatch.map((matches) =>
+                matches.seriesMatches.map((series) =>
+                  series.seriesAdWrapper ? series.seriesAdWrapper.matches.map((matchList) => (
+                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName}</span>
+                      <div><span className='text-[13px]'>{matchList.matchInfo.matchDesc}</span>, <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span></div>
+                      {matchList.matchScore ? Object.values(matchList.matchScore).map((teamScore, teamindex) => (
+                        console.log("team score:", teamScore),
+                        <div className='flex justify-between text-[15px]'>
+                          <span className='font-medium'>{matchList.matchInfo[`team${teamindex + 1}`].teamSName}</span>
+                          <span className='font-medium'>
+                            {teamScore.inngs1.runs} - {teamScore.inngs1.wickets} ({Math.round((teamScore.inngs1.overs % 1) * 10) == 6 ? parseInt(teamScore.inngs1.overs) + 1 : teamScore.inngs1.overs})
+                          </span>
+                        </div>
+                      )) : <div>{null}</div>}
+                      <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+                    </div>
+                  )) : null
                 )
-              }
-              )
-              }
+              )}
             </div>
           </>
         )
       }
-      else {
-        console.log("empty:", intMatch);
-        return (
-          <>
-            no live matches
-          </>
-        )
-      }
     }
+    //& {teamScore.team1Score.inngs2.runs}-{teamScore.team1Score.inngs2.wickets} ({teamScore.team1Score.inngs2.overs})
     else {
-      return <>no live matches</>
+      return <> <h1>no live matches now</h1></>
     }
   }
   else if (err !== 0) {
-    return <>error:{err.message}</>
+    return <> <h1>{err.message}</h1></>
   }
   else {
-    return (
-      <>
-        <div class="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div>
-      </>
-    )
+    return <> <div class="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div></>
   }
 }
 export default Live
+// if (res !== 0) {
+//   if (res.data.typeMatches !== undefined) {
+//     const intMatch = res.data.typeMatches.filter((matchTypes) => matchTypes.matchType === 'International' || matchTypes.matchType === 'League')
+//     if (intMatch.length !== 0) {
+//       console.log("intmatch:", intMatch);
+//       return (
+//         <>
+//           <div className='flex flex-col sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4'>
+//             {intMatch.map((matches) => {
+//               return (
+//                 matches.seriesMatches.map((innerMatches) => {
+//                   if (innerMatches.seriesAdWrapper !== undefined) {
+//                     return (
+//                       innerMatches.seriesAdWrapper.matches.map((matchList) => {
+//                         if (matchList.matchInfo.matchFormat === "TEST") {
+//                           if (matchList.matchScore !== undefined) {
+//                             if (matchList.matchScore.team2Score.inngs2 !== undefined) {
+//                               return (
+//                                 <>
+//                                   <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                     <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                     <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs}) & {matchList.matchScore.team1Score.inngs2.runs}-{matchList.matchScore.team1Score.inngs2.wickets} ({matchList.matchScore.team1Score.inngs2.overs})</span></div>
+//                                     {/* 2nd t dtails: */}
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs}) & {matchList.matchScore.team2Score.inngs2.runs}-{matchList.matchScore.team2Score.inngs2.wickets} ({matchList.matchScore.team2Score.inngs2.overs})</span></div>
+//                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                     <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+//                                   </div>
+//                                 </>
+//                               )
+//                             }
+//                             else if (matchList.matchScore.team1Score.inngs2 !== undefined) {
+//                               return (
+//                                 <>
+//                                   <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                     <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                     <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs}) & {matchList.matchScore.team1Score.inngs2.runs}-{matchList.matchScore.team1Score.inngs2.wickets} ({matchList.matchScore.team1Score.inngs2.overs})</span></div>
+//                                     {/* 2nd t dtails: */}
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs})</span></div>
+//                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                     <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+//                                   </div>
+//                                 </>
+//                               )
+//                             }
+//                             else if (matchList.matchScore.team2Score.inngs1 !== undefined) {
+//                               return (
+//                                 <>
+//                                   <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                     <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                     <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
+//                                     {/* 2nd t dtails: */}
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs})</span></div>
+//                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                     <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+//                                   </div>
+//                                 </>
+//                               )
+//                             }
+//                             else if (matchList.matchScore.team1Score !== undefined) {
+//                               return (
+//                                 <>
+//                                   <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                     <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                     <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
+//                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                     <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+//                                   </div>
+//                                 </>
+//                               )
+//                             }
+//                           }
+//                           else {
+//                             return (
+//                               <>
+//                                 <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                   <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                   <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                   <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span>
+//                                   </div>
+//                                   <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span>
+//                                   </div>
+//                                   <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                 </div>
+//                               </>
+//                             )
+//                           }
+//                         }
+//                         else if (matchList.matchInfo.matchFormat !== "TEST") {
+//                           if (matchList.matchScore !== undefined) {
+//                             if (matchList.matchScore.team2Score !== undefined) {
+//                               return (
+//                                 <>
+//                                   <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                     <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                     <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>
+//                                     {/* 2nd t dtails: */}
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team2.teamSName}</span><span className='font-medium'>{matchList.matchScore.team2Score.inngs1.runs}-{matchList.matchScore.team2Score.inngs1.wickets} ({matchList.matchScore.team2Score.inngs1.overs})</span></div>
+//                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                     <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+//                                   </div>
+//                                 </>
+//                               )
+//                             }
+//                             else if (matchList.matchScore.team1Score !== undefined) {
+//                               return (
+//                                 <>
+//                                   <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
+//                                     <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+//                                     <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
+//                                     <div className='flex justify-between text-[15px]'><span className='font-medium'>{matchList.matchInfo.team1.teamSName}</span><span className='font-medium'>{matchList.matchScore.team1Score.inngs1.runs}-{matchList.matchScore.team1Score.inngs1.wickets} ({matchList.matchScore.team1Score.inngs1.overs})</span></div>w
+//                                     <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
+//                                     <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+//                                   </div>
+//                                 </>
+//                               )
+//                             }
+//                             else {
+//                               return null
+//                             }
+//                           }
+//                         }
+//                         else {
+//                           return (
+//                             <>
+//                               <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-1'>
+//                                 <span className='text-gray-800 font-medium text-sm'>{matchList.matchInfo.seriesName}</span>
+//                                 <span className='text-sm'>{matchList.matchInfo.venueInfo.city}</span>
+//                                 <span className='font-medium text-red-600'>{matchList.matchInfo.status}</span>
+//                               </div>
+//                             </>
+//                           )
+//                         }
+//                       })
+//                     )
+//                   }
+//                   else {
+//                     return null
+//                   }
+//                 })
+//               )
+//             }
+//             )
+//             }
+//           </div>
+//         </>
+//       )
+//     }
+//     else {
+//       console.log("empty:", intMatch);
+//       return (
+//         <>
+//           no live matches
+//         </>
+//       )
+//     }
+//   }
+//   else {
+//     return <>no live matches</>
+//   }
+// }
+// else if (err !== 0) {
+//   return <>error:{err.message}</>
+// }
+// else {
+//   return (
+//     <>
+//       <div class="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div>
+//     </>
+//   )
+// }
