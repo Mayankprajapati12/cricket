@@ -1,27 +1,27 @@
 import axios from 'axios';
-import React from 'react'
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { idGen } from './matchIDslice';
 import { useDispatch } from 'react-redux';
 
 const Recent = () => {
+  const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   const options = {
     method: 'GET',
     // 1399 id
     // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
     headers: {
-      'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
-      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
+      'X-RapidAPI-Key': VITE_oldIDkey,
+      'X-RapidAPI-Host': VITE_apihost
     }
   }
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
     headers: {
-      'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
-      'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+      'x-rapidapi-key': VITE_ryukIDkey,
+      'x-rapidapi-host': VITE_apihost
     }
   };
   const [res, getRes] = useState(0)
@@ -49,7 +49,7 @@ const Recent = () => {
             <div className='flex flex-col sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 '>
               {intMatch.map((matches) =>
                 matches.seriesMatches.map((series) =>
-                  series.seriesAdWrapper? series.seriesAdWrapper.matches.map((matchList) => (
+                  series.seriesAdWrapper ? series.seriesAdWrapper.matches.map((matchList) => (
                     <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
                       <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName}</span>
                       <div><span className='text-[13px]'>{matchList.matchInfo.matchDesc}</span>, <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span></div>
@@ -65,7 +65,7 @@ const Recent = () => {
                       <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
                       <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
                     </div>
-                  )):null
+                  )) : null
                 )
               )}
             </div>
@@ -99,7 +99,7 @@ export default Recent
 //     method: 'GET',
 //     // 1399 id
 //     // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
-//     headers: {  
+//     headers: {
 //       'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
 //       'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
 //     }

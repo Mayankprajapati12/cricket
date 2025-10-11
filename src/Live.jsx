@@ -5,22 +5,23 @@ import { idGen } from './matchIDslice';
 import { useDispatch } from 'react-redux';
 
 const Live = () => {
+  const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   const options = {
     method: 'GET',
     // 1399 id
     // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
     headers: {
-      'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
-      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
+      'X-RapidAPI-Key': VITE_oldIDkey,
+      'X-RapidAPI-Host': VITE_apihost
     }
   }
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
     headers: {
-      'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
-      'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+      'x-rapidapi-key': VITE_ryukIDkey,
+      'x-rapidapi-host': VITE_apihost
     }
   };
   const [res, getRes] = useState(0)
@@ -28,7 +29,7 @@ const Live = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     async function getRecent() {
-      const response = await axios.request(ryukoptions)
+      const response = await axios.request(options)
       getRes(response)
     }
     getRecent()
@@ -57,7 +58,7 @@ const Live = () => {
                         <div className='flex justify-between text-[15px]'>
                           <span className='font-medium'>{matchList.matchInfo[`team${teamindex + 1}`].teamSName}</span>
                           <span className='font-medium'>
-                            {teamScore.inngs1.runs} - {teamScore.inngs1.wickets} ({Math.round((teamScore.inngs1.overs % 1) * 10) == 6 ? parseInt(teamScore.inngs1.overs) + 1 : teamScore.inngs1.overs})
+                            {teamScore.inngs1.runs} - {teamScore.inngs1.wickets? teamScore.inngs1.wickets : 0} ({Math.round((teamScore.inngs1.overs % 1) * 10) == 6 ? parseInt(teamScore.inngs1.overs) + 1 : teamScore.inngs1.overs})
                           </span>
                         </div>
                       )) : <div>{null}</div>}
@@ -71,8 +72,10 @@ const Live = () => {
           </>
         )
       }
+      else {
+      return <> <h1>no live matches now</h1></>
     }
-    //& {teamScore.team1Score.inngs2.runs}-{teamScore.team1Score.inngs2.wickets} ({teamScore.team1Score.inngs2.overs})
+    }
     else {
       return <> <h1>no live matches now</h1></>
     }

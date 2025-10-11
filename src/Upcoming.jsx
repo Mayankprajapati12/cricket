@@ -1,13 +1,14 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 const Upcoming = () => {
+  const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   const options = {
     method: 'GET',
     // 1399 id
     // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
     headers: {
-      'X-RapidAPI-Key': '52148c7b92mshbe7dd9b5e9b25d4p1d51dfjsn8f39a3cea1ad',
-      'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
+      'X-RapidAPI-Key': VITE_oldIDkey,
+      'X-RapidAPI-Host': VITE_apihost
     }
   }
   const ryukoptions = {
@@ -15,8 +16,8 @@ const Upcoming = () => {
     // ryuk id
     // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
     headers: {
-      'x-rapidapi-key': 'b4672dd53dmshc4ebaba2789b72dp1ea553jsn856fe078e8ff',
-      'x-rapidapi-host': 'cricbuzz-cricket.p.rapidapi.com'
+      'x-rapidapi-key': VITE_ryukIDkey,
+      'x-rapidapi-host': VITE_apihost
     }
   };
   const [res, getRes] = useState(0)
@@ -70,7 +71,7 @@ const Upcoming = () => {
     return <> <h1>{err.message}</h1></>
   }
   else {
-    return <> <div class="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div></>
+    return <> <div className="w-12 h-12 border-t-red-500 border-r-red-500 border-b-transparent border-l-red-500 border-[5px] rounded-full animate-spin absolute top-1/2 left-1/2"></div></>
   }
 }
 export default Upcoming

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
+import News from './News'
 const Home = () => {
   const [menu, setMenu] = useState(false)
   const [link,setLink]=useState('live')
