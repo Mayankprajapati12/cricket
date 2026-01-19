@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { idGen } from './matchIDslice';
 import { useDispatch } from 'react-redux';
-
+// import Graph from './graphs';
 const Live = () => {
   const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   const options = {
     method: 'GET',
     // 1399 id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
     headers: {
       'X-RapidAPI-Key': VITE_oldIDkey,
       'X-RapidAPI-Host': VITE_apihost
@@ -18,7 +18,7 @@ const Live = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
+    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
     headers: {
       'x-rapidapi-key': VITE_ryukIDkey,
       'x-rapidapi-host': VITE_apihost
@@ -29,7 +29,7 @@ const Live = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     async function getRecent() {
-      const response = await axios.request(options)
+      const response = await axios.request(ryukoptions)
       getRes(response)
     }
     getRecent()
@@ -42,7 +42,7 @@ const Live = () => {
   if (res !== 0) {
     if (res.data.typeMatches) {
       const intMatch = res.data.typeMatches.filter((matchTypes) => matchTypes.matchType === 'International' || matchTypes.matchType === 'League')
-      if (intMatch) {
+      if (intMatch.length !== 0) {
         // console.log('int matcghes:', intMatch);
         return (
           <>
@@ -58,7 +58,7 @@ const Live = () => {
                         <div className='flex justify-between text-[15px]'>
                           <span className='font-medium'>{matchList.matchInfo[`team${teamindex + 1}`].teamSName}</span>
                           <span className='font-medium'>
-                            {teamScore.inngs1.runs} - {teamScore.inngs1.wickets? teamScore.inngs1.wickets : 0} ({Math.round((teamScore.inngs1.overs % 1) * 10) == 6 ? parseInt(teamScore.inngs1.overs) + 1 : teamScore.inngs1.overs})
+                            {teamScore.inngs1.runs} - {teamScore.inngs1.wickets ? teamScore.inngs1.wickets : 0} ({Math.round((teamScore.inngs1.overs % 1) * 10) == 6 ? parseInt(teamScore.inngs1.overs) + 1 : teamScore.inngs1.overs})
                           </span>
                         </div>
                       )) : <div>{null}</div>}
@@ -73,8 +73,9 @@ const Live = () => {
         )
       }
       else {
-      return <> <h1>no live matches now</h1></>
-    }
+        return <> <h1>no live International and League matches now</h1>   <Graph/>
+</>
+      }
     }
     else {
       return <> <h1>no live matches now</h1></>

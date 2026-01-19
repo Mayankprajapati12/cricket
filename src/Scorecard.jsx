@@ -14,9 +14,10 @@ const Scorecard = () => {
       'x-rapidapi-host': VITE_apihost,
     }
   }
+  // console.log(mId)
   const ryukoptions = {
     method: 'GET',
-    // ryuk id
+    // ryuk id/
     url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
     headers: {
       'x-rapidapi-key': VITE_ryukIDkey,
@@ -42,8 +43,8 @@ const Scorecard = () => {
       setInnings(scoreRes.data.scorecard[0])
     }
   }, [scoreRes])
-  console.log("res:", scoreRes == 0 ? 'loading...' : scoreRes);
-  console.log("err:", err);
+  console.log("scoreres:", scoreRes == 0 ? 'loading...' : scoreRes);
+  console.log("sccoreerr:", err);
   if (scoreRes !== 0) {
     return (
       <>
