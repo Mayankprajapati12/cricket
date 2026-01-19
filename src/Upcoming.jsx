@@ -14,7 +14,7 @@ const Upcoming = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
+    url: '/.netlify/functions/fetchData?endpoint=upcoming',
     headers: {
       'x-rapidapi-key': VITE_ryukIDkey,
       'x-rapidapi-host': VITE_apihost

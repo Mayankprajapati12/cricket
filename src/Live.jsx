@@ -18,7 +18,7 @@ const Live = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/live',
+    // url: '/.netlify/functions/fetchData?endpoint=live',
     headers: {
       'x-rapidapi-key': VITE_ryukIDkey,
       'x-rapidapi-host': VITE_apihost

@@ -18,7 +18,7 @@ const Scorecard = () => {
   const ryukoptions = {
     method: 'GET',
     // ryuk id/
-    url: `https://cricbuzz-cricketl.p.rapidapi.com/mcenter/v1/${mId.id}/hscard`,
+    url: `/.netlify/functions/fetchData?endpoint=${mId}/hscard`,
     headers: {
       'x-rapidapi-key': VITE_ryukIDkey,
       'x-rapidapi-host': VITE_apihost
