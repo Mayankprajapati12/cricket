@@ -4,25 +4,25 @@ import { Link } from 'react-router-dom';
 import { idGen } from './matchIDslice';
 import { useDispatch } from 'react-redux';
 
-const Recent = () => {
-  const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
+const Recent = ({ darkMode }) => {
+  // const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   const options = {
     method: 'GET',
     // 1399 id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
-    headers: {
-      'X-RapidAPI-Key': VITE_oldIDkey,
-      'X-RapidAPI-Host': VITE_apihost
-    }
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/recent',
+    // headers: {
+    //   'X-RapidAPI-Key': VITE_oldIDkey,
+    //   'X-RapidAPI-Host': VITE_apihost
+    // }
   }
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    url: '/.netlify/functions/fetchData?endpoint=recent',
-    headers: {
-      'x-rapidapi-key': VITE_ryukIDkey,
-      'x-rapidapi-host': VITE_apihost
-    }
+    url: '/.netlify/functions/fetchData?service=matches&endpoint=recent',
+    // headers: {
+    //   'x-rapidapi-key': VITE_ryukIDkey,
+    //   'x-rapidapi-host': VITE_apihost
+    // }
   };
   const [res, getRes] = useState(0)
   const [err, setErr] = useState(0)
@@ -50,8 +50,8 @@ const Recent = () => {
               {intMatch.map((matches) =>
                 matches.seriesMatches.map((series) =>
                   series.seriesAdWrapper ? series.seriesAdWrapper.matches.map((matchList) => (
-                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName}</span>
+                    <div className={`w-[95%] ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200'} m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px] transition-colors duration-300 ${darkMode ? 'border border-gray-700' : ''}`}>
+                      <span className={`${darkMode ? 'text-gray-300' : 'text-gray-800'} font-medium text-[13px]`}>{matchList.matchInfo.seriesName}</span>
                       <div><span className='text-[13px]'>{matchList.matchInfo.matchDesc}</span>, <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span></div>
                       {matchList.matchScore ? Object.values(matchList.matchScore).map((teamScore, teamindex) => (
                         // console.log("team score:", teamScore),
@@ -63,7 +63,7 @@ const Recent = () => {
                         </div>
                       )) : <div>{null}</div>}
                       <span className='font-medium text-red-600 text-[15px]'>{matchList.matchInfo.status}</span>
-                      <button className='bg-sky-500 mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm' onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
+                      <button className={`${darkMode ? 'bg-blue-700 hover:bg-blue-600' : 'bg-sky-500 hover:bg-sky-600'} mx-auto px-2 py-1 mt-2 rounded-md text-white cursor-pointer text-sm transition-colors duration-300`} onClick={() => { dispatch(idGen(matchList.matchInfo.matchId)) }}><Link to="/scorecard">Show Score</Link></button>
                     </div>
                   )) : null
                 )

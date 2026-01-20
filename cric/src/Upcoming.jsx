@@ -1,24 +1,24 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
-const Upcoming = () => {
-  const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
+const Upcoming = ({ darkMode }) => {
+  // const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   const options = {
     method: 'GET',
     // 1399 id
-    // url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
-    headers: {
-      'X-RapidAPI-Key': VITE_oldIDkey,
-      'X-RapidAPI-Host': VITE_apihost
-    }
+    url: 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1/upcoming',
+    // headers: {
+    //   'X-RapidAPI-Key': VITE_oldIDkey,
+    //   'X-RapidAPI-Host': VITE_apihost
+    // }
   }
   const ryukoptions = {
     method: 'GET',
     // ryuk id
-    url: '/.netlify/functions/fetchData?endpoint=upcoming',
-    headers: {
-      'x-rapidapi-key': VITE_ryukIDkey,
-      'x-rapidapi-host': VITE_apihost
-    }
+    url: '/.netlify/functions/fetchData?service=matches&endpoint=upcoming',
+    // headers: {
+    //   'x-rapidapi-key': VITE_ryukIDkey,
+    //   'x-rapidapi-host': VITE_apihost
+    // }
   };
   const [res, getRes] = useState(0)
   const [err, setErr] = useState(0)
@@ -46,8 +46,8 @@ const Upcoming = () => {
               {intMatch.map((matches) =>
                 matches.seriesMatches.map((series) =>
                   series.seriesAdWrapper ? series.seriesAdWrapper.matches.map((matchList) => (
-                    <div className='w-[95%] bg-gray-200 m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px]'>
-                      <span className='text-gray-800 font-medium text-[13px]'>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
+                    <div className={`w-[95%] ${darkMode ? 'bg-gray-800 text-white' : 'bg-gray-200'} m-auto px-3 py-3 text-base flex flex-col my-3 rounded-sm gap-y-[1px] transition-colors duration-300 ${darkMode ? 'border border-gray-700' : ''}`}>
+                      <span className={`${darkMode ? 'text-gray-300' : 'text-gray-800'} font-medium text-[13px]`}>{matchList.matchInfo.seriesName.substring(0, 39) + "..."}</span>
                       <span className='text-[13px]'>{matchList.matchInfo.venueInfo.city}</span>
                       <div className='h-7 w-[90%] flex justify-around font-semibold text-lg'>
                         <span>{matchList.matchInfo.team1.teamSName}</span><span>Vs</span><span>{matchList.matchInfo.team2.teamSName}</span>

@@ -2,27 +2,28 @@ import { useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Teamscore from './Teamscore'
-const Scorecard = () => {
+const Scorecard = ({ darkMode }) => {
   const mId = useSelector((state) => state.id)
-  const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
+  console.log('mid::',mId)
+  // const { VITE_apihost, VITE_oldIDkey, VITE_ryukIDkey } = import.meta.env;
   // 1399 id
   const options = {
     method: 'GET',
-    // url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${mId}/hscard`,
-    headers: {
-      'x-rapidapi-key': VITE_oldIDkey,
-      'x-rapidapi-host': VITE_apihost,
-    }
+    url: `https://cricbuzz-cricket.p.rapidapi.com/mcenter/v1/${mId}/hscard`,
+    // headers: {
+    //   'x-rapidapi-key': VITE_oldIDkey,
+    //   'x-rapidapi-host': VITE_apihost,
+    // }
   }
   // console.log(mId)
   const ryukoptions = {
     method: 'GET',
     // ryuk id/
-    url: `/.netlify/functions/fetchData?endpoint=${mId}/hscard`,
-    headers: {
-      'x-rapidapi-key': VITE_ryukIDkey,
-      'x-rapidapi-host': VITE_apihost
-    }
+    url: `/.netlify/functions/fetchData?service=scorecard&endpoint=${mId.id}/hscard`,
+    // headers: {
+    //   'x-rapidapi-key': VITE_ryukIDkey,
+    //   'x-rapidapi-host': VITE_apihost
+    // }
   };
   const [scoreRes, setScoreRes] = useState(0)
   const [err, setScoreErr] = useState(0)
@@ -48,15 +49,15 @@ const Scorecard = () => {
   if (scoreRes !== 0) {
     return (
       <>
-        <div className='m-2 flex flex-col items-center gap-y-2'>
+        <div className={`m-2 flex flex-col items-center gap-y-2 ${darkMode ? 'bg-gray-900' : ''}`}>
           {/* <span>{scoreRes.data.matchHeader.seriesName}</span>
           <span>{scoreRes.data.matchHeader.matchDescription}</span> */}
-          <span className='lg:text-xl text-red-500 font-semibold'>{scoreRes.data.status}</span>
+          <span className={`lg:text-xl ${darkMode ? 'text-yellow-400' : 'text-red-500'} font-semibold`}>{scoreRes.data.status}</span>
         </div>
-        <div className='flex flex-wrap lg:gap-x-3 mt-4 justify-center'>
-          {scoreRes.data.scorecard ? scoreRes.data.scorecard.map((innings, innings_index) => { return (<div className={`p-2 px-1 m-0.5 text-m border-2 ${innings_index == defaultlink ? 'bg-sky-500 text-white' : 'bg-white-500'} hover:bg-sky-500 hover:text-white`}><button onClick={() => { setInnings(innings); setDefaultlink(innings_index) }}>{innings_index==2? `${innings.batteamsname} 2nd innings` : innings_index==3? `${innings.batteamsname} 2nd innings` : `${innings.batteamsname} innings`}</button></div>) }) : 'no innings data'}
+        <div className={`flex flex-wrap lg:gap-x-3 mt-4 justify-center ${darkMode ? 'bg-gray-900' : ''}`}>
+          {scoreRes.data.scorecard ? scoreRes.data.scorecard.map((innings, innings_index) => { return (<div className={`p-2 px-1 m-0.5 text-m border-2 transition-colors duration-300 ${innings_index == defaultlink ? darkMode ? 'bg-blue-700 text-white' : 'bg-sky-500 text-white' : darkMode ? 'bg-gray-800 text-white' : 'bg-white-500'} hover:${darkMode ? 'bg-blue-700' : 'bg-sky-500'} hover:text-white`}><button onClick={() => { setInnings(innings); setDefaultlink(innings_index) }}>{innings_index==2? `${innings.batteamsname} 2nd innings` : innings_index==3? `${innings.batteamsname} 2nd innings` : `${innings.batteamsname} innings`}</button></div>) }) : 'no innings data'}
         </div>
-        <Teamscore scoreData={stateinnings} />
+        <Teamscore scoreData={stateinnings} darkMode={darkMode} />
       </>
     )
   }

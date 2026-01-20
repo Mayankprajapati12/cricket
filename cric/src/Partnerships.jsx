@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Partnerships = ({ pts }) => {
+const Partnerships = ({ pts, darkMode }) => {
   console.log('pts::', pts);
   let maxPartnerships = pts.reduce((acc, cur) => acc.totalruns > cur.totalruns ? acc : cur)
   console.log('maxPartnerships::', maxPartnerships);
@@ -8,26 +8,25 @@ const Partnerships = ({ pts }) => {
     return Math.trunc((cv / total_value) * 100)
   }
   return (
-    <div className='border-gray-400 border-2'>
-    <span className='flex justify-center bg-gray-300'>Partnerships</span>
+    <div className={`border-2 ${darkMode ? 'border-gray-700 bg-gray-800' : 'border-gray-400'}`}>
+    <span className={`flex justify-center ${darkMode ? 'bg-gray-700 text-white' : 'bg-gray-300'}`}>Partnerships</span>
       {
         pts ? pts.map((partnership_list, index) => {
-          let x
-          console.log('per::::',percent(partnership_list.totalruns,maxPartnerships.totalruns))
+          // console.log('per::::',percent(partnership_list.totalruns,maxPartnerships.totalruns))
           return (
-            <div key={index} className="border-b border-black py-2 h-10px flex justify-between">
-              <div id='firstbatter' className='flex flex-col items-center w-[20%] text-[13px]'>
+            <div key={index} className={`border-b ${darkMode ? 'border-gray-700' : 'border-black'} py-2 h-10px flex justify-between ${darkMode ? 'text-white' : ''}`}>
+              <div id='firstbatter' className='flex flex-col items-center w-[20%] text-xs sm:text-sm'>
                 <span>{partnership_list.bat1name}</span>
                 <span>{partnership_list.bat1runs}</span>
               </div>
               <div id='bar' className='flex flex-col items-center justify-evenly w-[57%]'>
-                <div className='text-[13px]'>{partnership_list.totalruns}</div>
+                <div className={`text-xs sm:text-sm ${darkMode ? 'text-white' : ''}`}>{partnership_list.totalruns}</div>
                 <div style={{width: partnership_list.totalruns === maxPartnerships ? '100%' : partnership_list.totalruns ===0? '20%': `${percent(partnership_list.totalruns,maxPartnerships.totalruns)}%`}} className={`h-6 flex justify-between items-center rounded-md`}>
                   <div id='b1' style={{width: `${percent(partnership_list.bat1runs,partnership_list.totalruns)}%`,backgroundColor:'green',height:'20px'}}></div>
                   <div id='b2' style={{width: `${100-percent(partnership_list.bat1runs,partnership_list.totalruns)}%`,backgroundColor:'skyblue',height:'20px'}}></div>
                 </div>
               </div>
-              <div id='secondbatter' className='flex flex-col items-center w-[20%] text-[13px]'>
+              <div id='secondbatter' className='flex flex-col items-center w-[20%] text-xs sm:text-sm'>
                 <span>{partnership_list.bat2name}</span>
                 <span>{partnership_list.bat2runs}</span>
               </div>
