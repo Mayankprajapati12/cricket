@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "sources": ["../../../../Desktop/Cric0/netlify/functions/fetchData.js"],
+  "sourceRoot": "C:/Users/HP/AppData/Local/Temp/tmp-16768-X4O7bPCRQJVG",
+  "sourcesContent": ["// netlify/functions/fetchData.js\r\nexports.handler = async function (event, context) {\r\n  const BASE_URL = 'https://cricbuzz-cricket.p.rapidapi.com/matches/v1';\r\n  const API_KEY = process.env.VITE_ryukIDkey;\r\n  const { endpoint } = event.queryStringParameters;\r\n\r\n  if (!endpoint) {\r\n    return { statusCode: 400, body: \"Missing endpoint parameter\" };\r\n  }\r\n  const targetUrl = `${BASE_URL}/${endpoint}`;\r\n  try {\r\n    const response = await fetch(targetUrl, {\r\n      headers: {\r\n        'X-RapidAPI-Key': `${API_KEY}`,\r\n        'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'\r\n        // 'Content-Type': 'application/json',\r\n      },\r\n    });\r\n    const data = await response.json();\r\n    return {\r\n      statusCode: 200,\r\n      body: JSON.stringify(data),\r\n    };\r\n  } catch (error) {\r\n    return { statusCode: 500, body: JSON.stringify({ error: error.message }) };\r\n  }\r\n};"],
+  "mappings": ";AACA,QAAQ,UAAU,eAAgB,OAAO,SAAS;AAChD,QAAM,WAAW;AACjB,QAAM,UAAU,QAAQ,IAAI;AAC5B,QAAM,EAAE,SAAS,IAAI,MAAM;AAE3B,MAAI,CAAC,UAAU;AACb,WAAO,EAAE,YAAY,KAAK,MAAM,6BAA6B;AAAA,EAC/D;AACA,QAAM,YAAY,GAAG,QAAQ,IAAI,QAAQ;AACzC,MAAI;AACF,UAAM,WAAW,MAAM,MAAM,WAAW;AAAA,MACtC,SAAS;AAAA,QACP,kBAAkB,GAAG,OAAO;AAAA,QAC5B,mBAAmB;AAAA;AAAA,MAErB;AAAA,IACF,CAAC;AACD,UAAM,OAAO,MAAM,SAAS,KAAK;AACjC,WAAO;AAAA,MACL,YAAY;AAAA,MACZ,MAAM,KAAK,UAAU,IAAI;AAAA,IAC3B;AAAA,EACF,SAAS,OAAO;AACd,WAAO,EAAE,YAAY,KAAK,MAAM,KAAK,UAAU,EAAE,OAAO,MAAM,QAAQ,CAAC,EAAE;AAAA,EAC3E;AACF;",
+  "names": []
+}

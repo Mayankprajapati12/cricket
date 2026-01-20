@@ -12,8 +12,8 @@ exports.handler = async function (event, context) {
     const response = await fetch(targetUrl, {
       headers: {
         'X-RapidAPI-Key': `${API_KEY}`,
-        'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com'
-        // 'Content-Type': 'applicatio3n/json',
+        'X-RapidAPI-Host': 'cricbuzz-cricket.p.rapidapi.com',
+        'Content-Type': 'application/json',
       },
     });
     const data = await response.json();
