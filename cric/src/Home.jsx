@@ -16,7 +16,7 @@ const Home = ({ darkMode, setDarkMode }) => {
   return (
     <>
       <div className='relative'>
-        <nav className={`h-[50px] w-full ${darkMode ? 'bg-blue-900 border-b border-blue-800' : 'bg-sky-500'} flex justify-between items-center transition-colors duration-300`}>
+        <nav className={`h-[50px] w-full ${darkMode ? 'bg-blue-900 border-b border-blue-800' : 'bg-red-500'} flex justify-between items-center transition-colors duration-300`}>
           <button 
             onClick={() => setDarkMode(!darkMode)}
             className={`ml-3 p-2 rounded-md transition-colors duration-300 ${darkMode ? 'bg-yellow-500 text-gray-900 hover:bg-yellow-400' : 'bg-gray-800 text-yellow-300 hover:bg-gray-700'}`}
